@@ -5,3 +5,4 @@ CREATE INDEX CONCURRENTLY denorm4 ON tweets_jsonb USING GIN (to_tsvector('englis
 CREATE INDEX CONCURRENTLY denorm5 ON tweets_jsonb USING GIN (to_tsvector('english', data->'extended_tweet'->>'full_text'));
 CREATE INDEX query4 ON tweets_jsonb USING GIN(to_tsvector('english', COALESCE(data->'extended_tweet'->>'full_text', data->>'text'))) WHERE (data->>'lang'='en');
 
+-- I created the first 5 indexes concurrently because I misunderstood what concurrently meant. This actually just slowed down the building of the indexes becasue my data was already loaded.
